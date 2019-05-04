@@ -1,4 +1,5 @@
 var Metalsmith  = require('metalsmith');
+var serve       = require('metalsmith-serve');
 var markdown    = require('metalsmith-markdown');
 var layouts     = require('metalsmith-layouts');
 var permalinks  = require('metalsmith-permalinks');
@@ -14,9 +15,19 @@ Metalsmith(__dirname)
   .destination('./out')
   .clean(false)
   .use(markdown())
-  .use(permalinks())
+  // .use(permalinks())
   .use(layouts({
     engine: 'handlebars'
+  }))
+  .use(serve({
+    port: 8081,
+    verbose: true,
+    http_error_files: {
+      404: "/404.html"
+    },
+    redirects: {
+      'old': 'new'
+    }
   }))
   .build(function(err, files) {
     if (err) { throw err; }
