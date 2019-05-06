@@ -16,7 +16,7 @@ Metalsmith(__dirname)
   .destination('./out')
   .clean(false)
   .use(markdown())
-  // .use(permalinks())
+  .use(permalinks())
   .use(layouts({
     engine: 'handlebars'
   }))
@@ -24,7 +24,7 @@ Metalsmith(__dirname)
     port: 8081,
     verbose: true,
     http_error_files: {
-      404: "/404.html"
+      404: "/404/"
     },
     redirects: {
       'old': 'new'
