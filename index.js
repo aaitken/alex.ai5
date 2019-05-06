@@ -1,4 +1,5 @@
 var Metalsmith  = require('metalsmith');
+var watch = require('metalsmith-watch');
 var serve       = require('metalsmith-serve');
 var markdown    = require('metalsmith-markdown');
 var layouts     = require('metalsmith-layouts');
@@ -29,6 +30,15 @@ Metalsmith(__dirname)
       'old': 'new'
     }
   }))
+  .use(
+    watch({
+      paths: {
+        "${source}/**/*": true,
+        "templates/**/*": "**/*.md",
+      },
+      livereload: true,
+    })
+  )
   .build(function(err, files) {
     if (err) { throw err; }
   });
